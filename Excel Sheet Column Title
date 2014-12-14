@@ -1,0 +1,31 @@
+Question:
+	Given a positive integer, return its corresponding column title as appear in an Excel sheet.
+	For example:
+		1 -> A
+	    2 -> B
+		3 -> C
+		  ...
+		26 -> Z
+		27 -> AA
+		28 -> AB 
+
+Answer:
+	#include <string>;
+	using namespace std;
+	class Solution {
+	public:
+		string convertToTitle(int n) {
+			if (n < 1)
+				return "";
+			string title = "";
+			while(n != 0){
+				int remainder = n % 26;
+				if(remainder == 0)
+					title = "Z" + title;
+				else
+					title = char('A' - 1 +remainder) + title;
+				n = (n-1) / 26;
+			}
+			return title;
+		}
+	};
