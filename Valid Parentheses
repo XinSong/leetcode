@@ -1,0 +1,23 @@
+Question:
+	Given a string containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+	The brackets must close in the correct order, "()" and "()[]{}" are all valid but "(]" and "([)]" are not.
+
+Answer:
+# The key is using stack to store the tokens received befoe.
+class Solution:
+    # @return a boolean
+    def isValid(self, s):
+        left = {'(','{','['}
+        right = {')':'(','}':'{',']':'['}
+        stack = []
+        for item in s:
+            if item in left:
+                stack.append(item)
+            elif not stack:
+                return False
+            elif right[item] != stack.pop():
+                return False
+        if not stack:
+            return True
+        else:
+            return False

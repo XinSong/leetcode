@@ -1,0 +1,21 @@
+Question:
+	Given a roman numeral, convert it to an integer.
+	Input is guaranteed to be within the range from 1 to 3999.
+
+Answer:
+	class Solution:
+    # @return an integer
+    def romanToInt(self, s):
+        roman_int={'D':500, 'L':50, 'V':5, 'M':1000, 'C':100, 'X':10, 'I':1}
+        integer = 0
+        for roman_digit in s:
+            if integer == 0:
+                integer = roman_int[roman_digit]
+                last_roman_digit = roman_digit
+            else:
+                if last_roman_digit in ('I','X','C') and roman_int[roman_digit] > roman_int[last_roman_digit]:
+                    integer += roman_int[roman_digit] - 2* roman_int[last_roman_digit]
+                else:
+                    integer += roman_int[roman_digit]
+                last_roman_digit = roman_digit
+        return integer
