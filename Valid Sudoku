@@ -1,0 +1,26 @@
+Question:
+	Determine if a Sudoku is valid, according to: Sudoku Puzzles - The Rules.
+	The Sudoku board could be partially filled, where empty cells are filled with the character '.'.
+
+	Note: A valid Sudoku board (partially filled) is not necessarily solvable. Only the filled cells need to be validated.
+Answer:
+
+class Solution:
+    # @param board, a 9x9 2D array
+    # @return a boolean
+    def isValidSudoku(self, board):
+        row = [set()] * 9
+        column = [set()] * 9
+        square = [set()] * 9
+        for i in range(0,9):
+            for j in range(0, 9):
+                if board[i][j] == '.':
+                    continue
+                if board[i][j] in row[i] or board[i][j] in column[j] or board[i][j] in square[(i/3)*3 + j/3]:
+                    return False
+                else:
+                    row[i] = row[i] | {board[i][j]}
+                    column[j] = column[j] | {board[i][j]}
+                    square[(i/3)*3 + j/3] = square[(i/3)*3 + j/3] | {board[i][j]}
+        return True
+            
