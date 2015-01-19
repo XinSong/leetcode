@@ -1,0 +1,38 @@
+Quesetion:
+	Reverse digits of an integer.
+	Example1: x = 123, return 321
+	Example2: x = -123, return -321
+
+	Have you thought about this?
+	Here are some good questions to ask before coding. Bonus points for you if you have already thought through this!
+
+	If the integer's last digit is 0, what should the output be? ie, cases such as 10, 100.
+
+	Did you notice that the reversed integer might overflow? Assume the input is a 32-bit integer, then the reverse of 1000000003 overflows. How should you handle such cases?
+
+	For the purpose of this problem, assume that your function returns 0 when the reversed integer overflows.
+
+Answer:
+
+class Solution:
+    # @return an integer
+    def reverse(self, x):
+        if x<0:
+            x = -x
+            negative = True
+        else:
+            negative = False
+        reverse_integer = 0
+        while x != 0:
+            if negative and reverse_integer * 10 + x % 10 > 0x80000000:
+                return 0
+            elif not negative and reverse_integer * 10 + x % 10 > 0x7FFFFFFF:
+                return 0
+            else:
+                reverse_integer = reverse_integer*10 + x % 10
+            x /= 10
+        if negative:
+            return -1 * reverse_integer
+        else:
+            return reverse_integer
+        

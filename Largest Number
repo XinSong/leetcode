@@ -1,0 +1,26 @@
+Question:
+	Given a list of non negative integers, arrange them such that they form the largest number.
+	For example, given [3, 30, 34, 5, 9], the largest formed number is 9534330.  
+	Note: The result may be very large, so you need to return a string instead of an integer.
+
+Answer:
+#The essence of this question is compare and sort,
+#you need to find the key compare function.
+
+def compare(a,b):
+    if a + b < b + a:
+        return 1
+    elif a + b > b + a:
+        return -1
+    else:
+        return 0
+
+class Solution:
+    # @param num, a list of integers
+    # @return a string
+    def largestNumber(self, num):
+        num = [str(item) for item in num]
+        num.sort(cmp=compare,reverse=False)
+        return str(int(''.join(num)))
+    
+
