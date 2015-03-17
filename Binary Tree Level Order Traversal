@@ -1,0 +1,60 @@
+Question:
+	Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
+
+	For example:
+	Given binary tree {3,9,20,#,#,15,7},
+		3
+	   / \
+	  9  20
+		/  \
+	   15   7
+	return its level order traversal as:
+	[
+	  [3],
+	  [9,20],
+	  [15,7]
+	]
+
+Answer:
+
+# Definition for a  binary tree node
+# class TreeNode:
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
+class Solution:
+    # @param root, a tree node
+    # @return a list of lists of integers
+    def levelOrder(self, root):
+        
+        if not root:
+            return []
+        q = []
+        result = []
+        present_level_value = []
+        present_level_counter = 0
+        next_level_counter = 0
+        q.append(root)
+        present_level_counter = 1
+      
+        while q:
+            if present_level_counter == 0:
+                present_level_counter = next_level_counter
+                next_level_counter = 0
+                result.append(present_level_value)
+                present_level_value = []
+                
+            node = q[0]
+            q = q[1:]
+            present_level_counter -= 1
+            present_level_value.append(node.val)
+            if node.left:
+                next_level_counter += 1
+                q.append(node.left)
+            if node.right:
+                next_level_counter += 1
+                q.append(node.right)
+        result.append(present_level_value)
+        return result
