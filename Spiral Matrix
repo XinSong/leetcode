@@ -1,0 +1,86 @@
+Given a matrix of m x n elements (m rows, n columns), return all elements of the matrix in spiral order.
+
+Example 1:
+Input:
+[
+ [ 1, 2, 3 ],
+ [ 4, 5, 6 ],
+ [ 7, 8, 9 ]
+]
+Output: [1,2,3,6,9,8,7,4,5]
+
+Example 2:
+Input:
+[
+  [1, 2, 3, 4],
+  [5, 6, 7, 8],
+  [9,10,11,12]
+]
+Output: [1,2,3,4,8,12,11,10,9,5,6,7]
+
+
+Solution1:
+class Solution(object):
+    def spiralOrder(self, matrix):
+        def spiral_path(start_x, start_y, end_x, end_y):
+            for y in range(start_y, end_y + 1):
+                yield start_x, y
+
+            for x in range(start_x + 1, end_x + 1):
+                yield x, end_y
+
+            if start_x < end_x and start_y < end_y:
+                for y in range(end_y - 1, start_y, -1):
+                    yield end_x, y
+
+                for x in range(end_x, start_x, -1):
+                    yield x, start_y
+
+        if not matrix:
+            return [ ]
+
+        result = []
+        start_x, start_y = 0, 0
+        end_x, end_y = len(matrix) - 1, len(matrix[0]) - 1
+
+        while start_x <= end_x and start_y <= end_y:
+            for x, y in spiral_path(start_x, start_y, end_x, end_y):
+                result.append(matrix[x][y])
+            start_x, start_y = start_x + 1, start_y + 1
+            end_x, end_y = end_x - 1, end_y - 1
+        return result
+
+Solution2:
+class Solution(object):
+    def spiralOrder(self, matrix):
+        """
+        :type matrix: List[List[int]]
+        :rtype: List[int]
+        """
+        if not matrix:
+            return [ ]
+        rows, columns = len(matrix), len(matrix[0])
+        result = []
+        step_stage = 0
+        step = [(0, 1), (1, 0), (0, -1), (-1, 0)] #step表示四个阶段的坐标移动方向：向右、向下、向左、向上
+        start_x, start_y, end_x, end_y = 0, 0, rows, columns
+        x, y = start_x, start_y
+        length = columns
+        for _ in range(rows * columns):
+            result.append(matrix[x][y])
+            next_x = x + step[step_stage][0]
+            next_y = y + step[step_stage][1]
+            if not ((start_x <= next_x < end_x and start_y <= next_y < end_y) and (not(next_x == start_x and next_y == start_y))):
+                step_stage += 1
+                if step_stage  == 4:
+                    step_stage = 0
+                    start_x, start_y = start_x + 1, start_y + 1
+                    end_x, end_y = end_x - 1, end_y -1
+                    next_x, next_y = start_x, start_y
+                else:
+                    next_x = x + step[step_stage][0]
+                    next_y = y + step[step_stage][1]
+            x, y = next_x, next_y
+        return result
+
+
