@@ -1,0 +1,24 @@
+import pdb
+class Solution:
+    def longestCommonPrefix(self, strs) -> str:
+#        pdb.set_trace()
+        prefix = None
+        for str_item in strs:
+            if prefix is None:
+                prefix = str_item
+            else:
+                _prefix = ''
+                for idx, _char in enumerate(str_item):
+                    if idx < len(prefix) and _char == prefix[idx]:
+                        _prefix += _char
+                    else:
+                        break
+                prefix = _prefix
+        return prefix
+    
+if __name__ == '__main__':
+    solution = Solution()
+    str_list = ['flower', 'flow', 'flight']
+    print(solution.longestCommonPrefix(str_list))
+    str_list = ['ab', 'a']
+    print(solution.longestCommonPrefix(str_list))
