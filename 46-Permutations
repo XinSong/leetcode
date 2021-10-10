@@ -1,0 +1,12 @@
+class Solution:
+    def permute(self, nums):
+        if len(nums) <= 1:
+            return [nums]
+        else:
+            res = []
+            for idx,num in enumerate(nums):
+                head_num = [num]
+                _nums = nums[0:idx] + nums[idx+1:]
+                _res = self.permute(_nums)
+                res.extend([head_num + _perm for _perm in _res])
+            return res

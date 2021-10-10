@@ -1,0 +1,32 @@
+class Solution:
+    def generateParenthesis(self, n):
+        result = []
+        left = ['('] * n
+        right = [')'] * n
+        combs = []
+        self.__generateParenthesis(left, right, combs, result)
+        return result
+    
+    def __generateParenthesis(self, left, right, combs, result):
+        if len(left) == 0 and len(right) == 0:
+            result.append(''.join(combs))
+            return
+        else:
+            if len(left) < len(right):
+                if len(left) != 0:
+                    combs.append(left.pop())
+                    self.__generateParenthesis(left, right, combs, result)
+                    left.append(combs.pop())
+                
+                combs.append(right.pop())
+                self.__generateParenthesis(left, right, combs, result)
+                right.append(combs.pop())
+            else:
+                combs.append(left.pop())
+                self.__generateParenthesis(left, right, combs, result)
+                left.append(combs.pop())
+
+if __name__ == '__main__':
+    solution = Solution()
+    print(solution.generateParenthesis(3))
+        

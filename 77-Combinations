@@ -1,0 +1,15 @@
+class Solution:
+    def combine(self, n: int, k: int) -> List[List[int]]:
+        n_lst = list(range(1, n+1))
+        return self.__combine(n_lst, k)
+    
+    def __combine(self, n_lst, k):
+        if k == 1:
+            return [[_n] for _n in n_lst]
+        else:
+            res = []
+            for idx, _n in enumerate(n_lst):
+                _n_lst = n_lst[idx+1:]
+                _res = self.__combine(_n_lst, k-1)
+                res.extend([[_n] + _comb for _comb in _res])
+            return res

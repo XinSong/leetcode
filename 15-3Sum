@@ -1,0 +1,27 @@
+class Solution:
+    def threeSum(self, nums: List[int]) -> List[List[int]]:
+        nums_sorted = sorted(nums)
+        result_lst = list()
+        for idx, num in enumerate(nums_sorted):
+            if idx>0 and num == nums_sorted[idx-1]:
+                continue
+            target_value = -num
+            head = idx+1
+            tail = len(nums_sorted) - 1
+            while head < tail:
+                _value = nums_sorted[head] + nums_sorted[tail]
+                if _value == target_value:
+                    result_lst.append([num, nums_sorted[head], nums_sorted[tail]])
+                    head += 1
+                    while nums_sorted[head] == nums_sorted[head-1] and head < tail:
+                        head += 1
+                elif _value > target_value:
+                    tail -= 1
+                else:
+                    head += 1
+        return result_lst
+
+if __name__ == '__main__':
+    solution = Solution()
+    nums = [-1,0,1,2,-1,-4]
+    print(solution.threeSum(nums))

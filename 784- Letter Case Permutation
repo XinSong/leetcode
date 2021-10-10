@@ -1,0 +1,26 @@
+class Solution:
+    def letterCasePermutation(self, s: str) -> List[str]:  
+        alpha_num = 0
+        for _char in s:
+            if _char.isalpha():
+                alpha_num += 1
+        
+        res = []
+        for idx in range(2**alpha_num):
+            res_item = ''
+            alpha_idx = 0
+            for _char in s:
+                if _char.isalpha():
+                    if idx & (1 << alpha_idx) != 0:
+                        res_item += _char.upper()
+                    else:
+                        res_item += _char.lower()
+                    alpha_idx += 1
+                else:
+                    res_item += _char
+            res.append(res_item)
+        return res
+  
+if __name__ == '__main__':
+    solution = Solution()
+    print(solution.letterCasePermutation('a1b2'))

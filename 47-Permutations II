@@ -1,0 +1,16 @@
+class Solution:
+    def permuteUnique(self, nums: List[int]) -> List[List[int]]:
+        if len(nums) <= 1:
+            return [nums]
+        else:
+            res = []
+            head_set = set()
+            for idx, num in enumerate(nums):
+                if num not in head_set:
+                    head_set.add(num)
+                    _nums = nums[0:idx] + nums[idx+1:]
+                    _res = self.permuteUnique(_nums)
+                    res.extend( [[num] + _perm for _perm in _res])
+                else:
+                    continue
+            return res

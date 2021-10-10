@@ -1,0 +1,36 @@
+'''
+Given an integer array nums of unique elements, return all possible subsets (the power set).
+The solution set must not contain duplicate subsets. Return the solution in any order.
+
+Example 1:
+Input: nums = [1,2,3]
+Output: [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
+
+Example 2:
+Input: nums = [0]
+Output: [[],[0]]
+'''
+
+# Solution 1: Cascading
+class Solution:
+    def subsets(self, nums: List[int]) -> List[List[int]]:
+        res = [[]]
+        for num in nums:
+            res.extend([[num]+_perm for _perm in res])
+        return res
+
+# Solution 2: Lexicographic (Binary Sorted) Subsets
+class Solution:
+def subsets(self, nums):
+	def getSubset(nums, bitmask):
+		subset = []
+		for idx, _num in enumerate(nums):
+			if bitmask & (1 << idx) != 0:
+				subset.append(_num)
+			else:
+				continue
+		return subset
+	res = []
+	for idx in range(2**len(nums)):
+		res.append(getSubset(nums, idx))
+	return res
