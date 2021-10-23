@@ -1,0 +1,28 @@
+from collections import defaultdict
+from collections import Counter
+class Solution:
+    def findMaxForm(self, strs, m, n):
+        __memory = defaultdict(lambda:defaultdict(dict))
+        return self.__lookUpMemory(strs, 0, m, n, __memory)
+    
+    def __lookUpMemory(self, strs, idx, m, n, __memory):
+        if idx >= len(strs):
+            return 0
+        if idx in __memory and m in __memory[idx] and n in __memory[idx][m]:
+            return __memory[idx][m][n]
+        
+        counter = Counter(strs[idx]) 
+        if counter['0'] <= m and counter['1'] <= n:
+            with_cur = self.__lookUpMemory(strs, idx+1, m-counter['0'], n-counter['1'], __memory) + 1
+        else:
+            with_cur = 0
+        without_cur = self.__lookUpMemory(strs, idx+1, m, n, __memory)
+        __memory[idx][m][n] = max(with_cur, without_cur)
+        return __memory[idx][m][n]
+
+if __name__ == '__main__':
+    solution = Solution()
+    strs = ["10","0001","111001","1","0"]
+    #strs = ["1","0"]
+    m, n = 5, 3
+    print(solution.findMaxForm(strs, m, n))

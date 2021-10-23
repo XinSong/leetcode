@@ -1,0 +1,27 @@
+from collections import defaultdict
+class Solution:
+    def findTargetSumWays(self, nums, target):
+        __memory = defaultdict(dict)
+        return self.__lookUpMemory(nums, 0, target, __memory)
+    
+    def __lookUpMemory(self, nums, idx, target, __memory):
+        if idx in __memory and target in __memory[idx]:
+            return __memory[idx][target]
+        
+        if idx + 1 == len(nums):
+            if  nums[idx] == abs(target):
+                if target == 0:
+                    __memory[idx][target] = 2
+                    return 2
+                else:
+                    __memory[idx][target] = 1
+                    return 1
+            else:
+                __memory[idx][target] = 0
+                return 0
+        
+        pos_cur = self.__lookUpMemory(nums, idx+1, target-nums[idx], __memory)
+        neg_cur = self.__lookUpMemory(nums, idx+1, target+nums[idx], __memory)
+        __memory[idx][target] = pos_cur + neg_cur
+        return pos_cur + neg_cur
+        
