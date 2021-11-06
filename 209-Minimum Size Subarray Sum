@@ -1,0 +1,28 @@
+class Solution:
+    def minSubArrayLen(self, target, nums):
+        start, end = 0, 1
+        array_sum = nums[0]
+        min_size = None
+        while end < len(nums):
+            while end < len(nums) and array_sum < target:
+                end += 1
+                array_sum += nums[end-1]
+            while start < end and array_sum - nums[start] >= target:
+                array_sum -= nums[start]
+                start += 1 
+            if array_sum < target:
+                break
+            else:
+                if min_size is None or min_size > end - start:
+                    min_size = end - start 
+                while array_sum >= target:
+                    array_sum -= nums[start]
+                    start += 1
+        if min_size is None:
+            return 0
+        else:
+            return min_size
+
+if __name__ == '__main__':
+    solution = Solution()
+    print(solution.minSubArrayLen(7, [2,3,1,2,4,3]))

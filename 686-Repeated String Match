@@ -1,0 +1,21 @@
+import math
+class Solution:
+    def repeatedStringMatch(self, a: str, b: str) -> int:
+        if a.find(b) != -1:
+            return 1
+        elif (a*2).find(b) != -1:
+            return 2
+        
+        length_a, length_b = len(a), len(b)
+        start = b.find(a)
+        if start == -1 or start >= length_a:
+            return -1
+        if start == 0:
+            rotate_times = math.ceil(length_b / length_a)
+        else:
+            rotate_times = math.ceil(length_b / length_a) + 1
+        
+        if (a * rotate_times).find(b) != -1:
+            return rotate_times
+        else:
+            return -1

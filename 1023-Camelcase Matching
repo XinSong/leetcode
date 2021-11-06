@@ -1,0 +1,28 @@
+class Solution:
+    def camelMatch(self, queries: List[str], pattern: str) -> List[bool]:
+        res = []
+        for query in queries:
+            if self.isMatch(query, pattern):
+                res.append(True)
+            else:
+                res.append(False)
+        return res
+        
+    def isMatch(self, query, pattern):
+        idx_q, idx_p = 0, 0
+        while idx_q < len(query) and idx_p < len(pattern):
+            if query[idx_q] == pattern[idx_p]:
+                idx_q += 1
+                idx_p += 1
+            elif query[idx_q].islower():
+                idx_q += 1
+            else:
+                return False
+            
+        if idx_p == len(pattern):
+            while idx_q < len(query) and query[idx_q].islower():
+                idx_q += 1
+            if idx_q == len(query) :     
+                return True
+            else:
+                return False

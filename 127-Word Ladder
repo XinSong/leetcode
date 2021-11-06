@@ -1,0 +1,40 @@
+from queue import Queue
+class Solution:
+    def ladderLength(self, beginWord, endWord, wordList):
+        q = Queue()
+        visited = set()
+        q.put([beginWord,{beginWord}])
+        visited.add(beginWord)
+
+        while not q.empty():
+            word, word_path = q.get()
+            for __word in wordList:
+                if __word not in visited:
+                    if self.isValidLadder(word, word_path, __word):
+                        __word_path = word_path | {__word}
+                        if __word == endWord:
+                            return len(__word_path)
+                        visited.add(__word)
+                        q.put([__word, __word_path])
+        return 0
+
+    def isValidLadder(self, word, word_path, ladder_word):
+        if ladder_word in word_path:
+            return False
+        distance = 0
+        for idx in range(0, len(word)):
+            if word[idx] != ladder_word[idx]:
+                distance += 1
+                if distance > 1:
+                    return False
+        if distance == 1:
+            return True
+        else:
+            return False
+
+if __name__ == '__main__':
+    solution = Solution()
+    beginWord = "hit"
+    endWord = "cog"
+    wordList = ["hot","dot","dog","lot","log","cog"]
+    print(solution.ladderLength(beginWord, endWord, wordList))

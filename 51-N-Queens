@@ -1,0 +1,30 @@
+class Solution:
+    def solveNQueens(self, n):
+        res = []
+        queen_coord = [-1] * n
+        row_idx = 0
+        while 0<= row_idx < n:
+            queen_coord[row_idx] += 1
+            while queen_coord[row_idx] < n and not self.isValid(queen_coord, row_idx):
+                queen_coord[row_idx] += 1
+            if queen_coord[row_idx] < n:
+                if row_idx == n-1:
+                    res.append([''.join(['.'*queen_coord[_row_idx],'Q','.'*(n-queen_coord[_row_idx]-1) ]) for _row_idx in range(n) ])
+                    queen_coord[row_idx] = -1
+                    row_idx -= 1
+                else:
+                    row_idx += 1
+            else:
+                queen_coord[row_idx] = -1
+                row_idx -= 1
+        return res
+            
+    def isValid(self, queen_coord, k):
+        for idx in range(0, k):
+            if abs(idx - k) == abs(queen_coord[idx] - queen_coord[k]) or queen_coord[idx] == queen_coord[k]:
+                return False
+        return True
+
+if __name__ == '__main__':
+    solution = Solution()
+    print(solution.solveNQueens(4))
