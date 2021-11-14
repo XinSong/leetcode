@@ -1,0 +1,22 @@
+from collections import defaultdict
+class Solution:
+    def findMaxLength(self, nums):
+        onecum_memory = dict()
+        onecum_memory[0] = -1
+        total_sum = 0
+        max_length = 0
+        for idx in range(0, len(nums)):
+            if nums[idx] == 0:
+                total_sum += -1
+            else:
+                total_sum += 1
+            if total_sum in onecum_memory:
+                if idx-onecum_memory[total_sum] > max_length:
+                    max_length = idx - onecum_memory[total_sum]
+            else:
+                onecum_memory[total_sum] = idx       
+        return max_length
+
+if __name__ =='__main__':
+    solution = Solution()
+    print(solution.findMaxLength([0,0,0,1,1,1,0]))

@@ -1,0 +1,35 @@
+class Solution:
+    def checkSubarraySum(self, nums, k):
+        remainder = dict()
+        total_sum = 0
+        for idx in range(0, len(nums)):
+            total_sum += nums[idx]
+            if total_sum % k == 0 and idx>=1:
+                return True
+            elif total_sum % k in remainder:
+                if (nums[idx] % k == 0 and idx - remainder[total_sum % k]>=2) or \
+                    (nums[idx] %k != 0 and total_sum % k in remainder and idx - remainder[total_sum % k]>=2):
+                    return True
+            else:
+                remainder[total_sum % k] = idx
+        return False
+
+if __name__ == '__main__':
+    solution = Solution()
+    print(solution.checkSubarraySum([1,2,12], 6))
+
+"""
+class Solution:
+    def checkSubarraySum(self, nums, k):
+        num_cumsum = [0]
+        total_sum = 0
+        for num in nums:
+            total_sum += num % k
+            num_cumsum.append(total_sum % k)
+        
+        for i in range(0, len(num_cumsum)-2):
+            for j in range(i+2, len(num_cumsum)):
+                if (num_cumsum[j] - num_cumsum[i]) % k == 0:
+                    return True
+        return False
+"""

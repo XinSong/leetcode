@@ -1,0 +1,17 @@
+from collections import defaultdict
+class Solution:
+    def numSubarraysWithSum(self, nums, goal):
+        one_cumsum = defaultdict(int)
+        one_cumsum[0] = 1
+        total_sum = 0
+        subarray_cnt = 0
+        for idx, num in enumerate(nums):
+            total_sum += num
+            if total_sum - goal in one_cumsum:
+                subarray_cnt += one_cumsum[total_sum - goal]
+            one_cumsum[total_sum] += 1
+        return subarray_cnt
+
+if __name__ == '__main__':
+    solution = Solution()
+    print(solution.numSubarraysWithSum([1,0,1,0,1],2))

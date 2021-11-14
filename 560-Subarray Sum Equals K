@@ -1,0 +1,37 @@
+from collections import defaultdict
+class Solution:
+    def subarraySum(self, nums, k):
+        cumsum_memory = defaultdict(int)
+        total_sum = 0
+        k_cnt = 0
+        cumsum_memory[0] = 1
+        for num in nums:
+            total_sum += num
+            if total_sum - k in cumsum_memory:
+                k_cnt += cumsum_memory[total_sum - k]
+            cumsum_memory[total_sum] += 1
+        return k_cnt
+
+if __name__ == '__main__':
+    solution = Solution()
+    print(solution.subarraySum([1],0))
+    print(solution.subarraySum([-1,-1,1],0))
+    print(solution.subarraySum([1,1,1],2))
+
+
+'''
+class Solution:
+    def subarraySum(self, nums, k):
+        total_sum = 0
+        nums_cumsum = [0]
+        for num in nums:
+            total_sum += num
+            nums_cumsum.append(total_sum)
+        
+        k_cnt = 0
+        for i in range(0, len(nums_cumsum)-1):
+            for j in range(i+1, len(nums_cumsum)):
+                if nums_cumsum[j] - nums_cumsum[i] == k:
+                    k_cnt += 1
+        return k_cnt
+'''
