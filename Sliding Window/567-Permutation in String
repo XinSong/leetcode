@@ -1,0 +1,25 @@
+from collections import Counter
+class Solution:
+    def checkInclusion(self, s1, s2):
+        s1_counter = Counter(s1)
+        if len(s2) < len(s1):
+            return False
+        w_left, w_right = 0, len(s1)
+        w_counter = Counter(s2[w_left:w_right])
+        while w_right < len(s2) and w_counter != s1_counter:
+            w_counter[s2[w_left]] -= 1
+            if w_counter[s2[w_left]] == 0:
+                del w_counter[s2[w_left]]
+            w_counter[s2[w_right]] += 1
+            w_left += 1
+            w_right += 1
+        if s1_counter == w_counter:
+            return True
+        else:
+            return False
+
+if __name__ == '__main__':
+    solution = Solution()
+    s1 = "adc"
+    s2 = "dcda"
+    print(solution.checkInclusion(s1, s2))
